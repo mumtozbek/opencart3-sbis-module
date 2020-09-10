@@ -1,0 +1,98 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        {% if ready_to_auth %}
+        <a href="{{ auth }}" data-toggle="tooltip" title="{{ button_auth }}" class="btn btn-success"><i class="fa fa-sign-in"></i></a>
+        {% endif %}
+        {% if ready_to_import %}
+        <a href="{{ exec }}" data-toggle="tooltip" title="{{ button_exec }}" class="btn btn-warning"><i class="fa fa-refresh"></i></a>
+        {% endif %}
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="module_sbis_status" id="input-status" class="form-control">
+                <option value="0">{{ text_disabled }}</option>
+                <option value="1"{% if module_sbis_status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-app_id">{{ entry_app_id }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="module_sbis_app_id" value="{{ module_sbis_app_id }}" placeholder="{{ entry_app_id }}" id="input-module_sbis_app_id" class="form-control" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-module_sbis_app_secret">{{ entry_app_secret }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="module_sbis_app_secret" value="{{ module_sbis_app_secret }}" placeholder="{{ entry_app_secret }}" id="input-module_sbis_app_secret" class="form-control" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-module_sbis_secret_key">{{ entry_secret_key }}</label>
+            <div class="col-sm-10">
+              <input type="module_sbis_secret_key" name="module_sbis_secret_key" value="{{ module_sbis_secret_key }}" placeholder="{{ entry_secret_key }}" id="input-module_sbis_secret_key" class="form-control" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sale_point_id">{{ entry_sale_point }}</label>
+            <div class="col-sm-10">
+              <select name="module_sbis_sale_point_id" id="input-sale_point_id" class="form-control">
+                <option value="0">{{ text_none }}</option>
+                {% for item in sale_points %}
+                <option value="{{ item.id }}"{% if module_sbis_sale_point_id == item.id %} selected="selected"{% endif %}>{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-price_list_id">{{ entry_price_list }}</label>
+            <div class="col-sm-10">
+              <select name="module_sbis_price_list_id" id="input-price_list_id"_id class="form-control">
+                <option value="0">{{ text_none }}</option>
+                {% for item in price_lists %}
+                <option value="{{ item.id }}"{% if module_sbis_price_list_id == item.id %} selected="selected"{% endif %}>{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}
